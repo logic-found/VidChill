@@ -10,11 +10,7 @@
 #### 📱 Responsive Design: ensures seamless user experience across various devices
 
 ## Homepage
-<div style="display: flex; justify-content: space-between; gap:5px">
-  <img width="400" alt="image" src="https://github.com/logic-found/VidChill/assets/93260606/2f681948-6096-4a1b-ad43-7af7ea94e514">
-  <img width="400" alt="image" src="https://github.com/logic-found/VidChill/assets/93260606/0d222a7a-c245-43b5-8f53-317d8b792f9e">
-</div>
-
+![image](https://github.com/logic-found/VidChill/assets/93260606/2f681948-6096-4a1b-ad43-7af7ea94e514)
 
 ## Video Player & Live Chat
 
@@ -35,4 +31,3 @@
 
 ## Data Source :
 #### YouTube API Integration for fetching and displaying content
-
