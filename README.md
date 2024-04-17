@@ -1,11 +1,11 @@
 
 ## VidChill
-### This project is a video streaming application inspired from YouTube, where users can watch videos, search content, engage in live chat and more.
+### This project is a video streaming application inspired by YouTube, where users can watch videos, search for content, engage in live chat, and more.
 
 ## Features : 
-#### :mag: Optimised Search Suggestions: Utlizing advanced concepts like Debouncing & Caching
+#### :mag: Optimised Search Suggestions: Utilizing advanced concepts like Debouncing & Caching
 #### 💬 N-level Comments Section: Supports nested comments driven by Recursion
-#### 🗣️ Live Chat: Enables real-time interaction just like youtube with storage optmisation
+#### 🗣️ Live Chat: Enables real-time interaction just like YouTube with storage optimization
 #### :arrow_double_down: Infinite Scroll: Allows users to effortlessly browse through an endless stream of content
 #### 📱 Responsive Design: ensures seamless user experience across various devices
 
