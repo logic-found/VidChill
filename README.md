@@ -25,9 +25,9 @@
 
 ## Technologies Used : 
 #### React: for building UI components
-#### Redux Toolkit : for state management
+#### Redux : for state management
 #### Typescript : for code quality & robust type safety
 #### Tailwind CSS : for styling & responsiveness
 
-## Data Source :
+### Data Source :
 #### YouTube API Integration for fetching and displaying content
