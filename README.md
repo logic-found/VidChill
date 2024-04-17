@@ -10,11 +10,11 @@
 #### 📱 Responsive Design: ensures seamless user experience across various devices
 
 ### Homepage
-![image](https://github.com/logic-found/VidChill/assets/93260606/b0c46e1c-01c1-4138-b0b3-7e740a1eda27)
+![image](https://github.com/logic-found/VidChill/assets/93260606/25854e84-e2b8-49ce-adc0-17a5c532f911)
 ![image](https://github.com/logic-found/VidChill/assets/93260606/0d222a7a-c245-43b5-8f53-317d8b792f9e)
 
 ### Video Player & Live Chat
-![image](https://github.com/logic-found/VidChill/assets/93260606/007b4615-ea58-45e3-8240-b34389ce02f3)
+![image](https://github.com/logic-found/VidChill/assets/93260606/9b7ab645-c3d1-4b4e-89fb-2dda882bdfb6)
 
 ### Comment Section
 ![image](https://github.com/logic-found/VidChill/assets/93260606/1d23a910-dc84-493a-aa4e-0e4935740960)
