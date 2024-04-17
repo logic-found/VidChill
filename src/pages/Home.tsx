@@ -9,7 +9,7 @@ import ShimmerUI from '../components/ShimmerUI/ShimmerHomeVideoCard'
 import InfiniteScroll from 'react-infinite-scroll-component';
 import FetchData from "../utils/FetchData"
 import { ApiResponseType } from "../Types"
-import { getSearchResults, SET_SEARCH_KEYWORD } from "../redux/SearchSlice";
+import { SET_SEARCH_KEYWORD } from "../redux/SearchSlice";
 
 
 export default function Home() {
@@ -41,7 +41,6 @@ export default function Home() {
 
   const onSearchKeywordSetHandler = (keyword: string) => {
     dispatch(SET_SEARCH_KEYWORD(keyword))
-    //dispatch(getSearchResults(keyword))
     navigate('/search');
   }
 

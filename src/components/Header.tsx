@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RxCross1 as CrossIcon } from "react-icons/rx";
 import { IoSearchOutline as SearchIcon } from "react-icons/io5";
-import { SET_SEARCH_KEYWORD, SET_SEARCH_SUGGESTION_CACHE, getSearchResults } from '../redux/SearchSlice'
+import { SET_SEARCH_KEYWORD, SET_SEARCH_SUGGESTION_CACHE } from '../redux/SearchSlice'
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import { ReduxRootState } from "../Types";
@@ -33,7 +33,6 @@ const Header: React.FC = () => {
 
     const onSearchKeywordSetHandler = (keyword: string) => {
         dispatch(SET_SEARCH_KEYWORD(keyword))
-        //dispatch(getSearchResults(keyword))
         setShowSearchSuggestion(false)
         navigate('/search');
     }
@@ -51,7 +50,6 @@ const Header: React.FC = () => {
     const searchHandler = (e: EventType | any) => {
         if (e.key !== 'Enter' && e.type !== 'click') return
         else if (searchKeyword === "") return
-        //dispatch(getSearchResults(searchKeyword))
         setShowSearchSuggestion(false)
         navigate('/search');
     }

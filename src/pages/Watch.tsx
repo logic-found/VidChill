@@ -112,7 +112,6 @@ const WatchPage: React.FC = () => {
             const response = await FetchData({
                 method: "GET",
                 url: channelUrl,
-                data: null,
             });
             setChannelDetailsLoading(false);
             setChannelDetails(response?.items[0]);
