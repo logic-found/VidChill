@@ -7,6 +7,7 @@ export interface SearchInitialState{
 export interface ApiFormat{
     url : string,
     method : string,
+    dependency? : any[]
 }
 export interface LiveChatMessage{
     avatar : string,
@@ -16,6 +17,16 @@ export interface LiveChatMessage{
 
 export interface LiveChatInitialState {
     messages : LiveChatMessage[]
+}
+export interface VideoPlayerInitialState {
+    videoPlayer : {
+        video : any,
+        loading : boolean
+    },
+    channelDetails : {
+        details : any,
+        loading : boolean
+    }
 }
 export interface Comment {
     id : number,

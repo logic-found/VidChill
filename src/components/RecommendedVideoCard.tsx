@@ -6,8 +6,9 @@ interface Props{
   video : any
 }
 const RecommendedVideoCard = ({ video } : Props) => {
+  
   return (
-    <Link className='w-full h-fit flex gap-2 items-center px-1 py-2 text-xs sm:text-sm hover:scale-[1.01] transition-transform duration-200 ease-in-out' to={`/watch/${video.id?.videoId}`}>
+    <Link className='w-full h-fit flex gap-2 items-center px-1 py-2 text-xs sm:text-sm hover:scale-[1.01] transition-transform duration-200 ease-in-out' to={`/watch/${video.id}`}>
       <img src={video?.snippet?.thumbnails?.medium?.url} className=' h-32  w-3/6 object-cover rounded-lg' />
       <div className='flex flex-col gap-1 w-3/6'>
         <p className='font-semibold line-clamp-2  text-sm sm:text-base '>{video.snippet?.title}</p>

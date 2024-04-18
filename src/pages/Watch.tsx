@@ -3,7 +3,6 @@ import useAxios from "../utils/useAxios";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import ShimmerVideoPlayer from "../components/ShimmerUI/ShimmerVideoPlayer";
-import FetchData from "../utils/FetchData";
 import ParseCount from "../utils/ParseCount";
 import ParseTimeandDate from "../utils/ParseTime&Date";
 import {
@@ -21,39 +20,30 @@ import {
     IoIosArrowDown as ArrowDown,
 } from "react-icons/io";
 import LiveChatMessage from "../components/LiveChatMessage";
-import { AddMessage } from "../redux/LiveChatSlice";
+import { ADD_MESSAGE, CLEAR_LIVE_CHAT_MESSAGES } from "../redux/LiveChatSlice";
 import { LiveChatMessage as Message } from "../Types";
 import { LiveChatData, GenerateRandomText } from "../utils/data";
 import RecommendedVideoCard from "../components/RecommendedVideoCard";
 import VideoComments from "../components/VideoComments";
 import { ApiResponseType } from "../Types";
-import ErrorHandler from "../utils/ErrorHandler";
-import { RootState } from "../redux/store";
-
-
+import { RootState, AppDispatch } from "../redux/store";
+import { getVideoPlayerData } from "../redux/VideoPlayerSlice";
+import { CLEAR_COMMENT } from '../redux/CommentSlice'
 
 type EventType = React.ChangeEvent<HTMLInputElement>;
 
 const WatchPage: React.FC = () => {
     const { id } = useParams();
-    const [video, setVideo] = useState<any>(null);
-    const dispatch = useDispatch();
-    const messages = useSelector((state : RootState) => state.liveChat.messages);
-    const videoUrl = `${process.env.VITE_APP_YOUTUBE_API}/${
-        process.env.VITE_APP_YOUTUBE_VIDEO_DETAILS_ENDPOINT
-    }&id=${id}`;
-    const trendingVideoUrl = `${process.env.VITE_APP_YOUTUBE_API}/${
-        process.env.VITE_APP_YOUTUBE_VIDEO_ENDPOINT
-    }`;
-    const { loading, data } : ApiResponseType = useAxios({
-        method: "GET",
-        url: videoUrl
-    });
-    const { data: trendingVideoData } : ApiResponseType = useAxios(
-        { method: "GET", url: trendingVideoUrl}
+    const dispatch = useDispatch<AppDispatch>()
+    const messages = useSelector((state: RootState) => state.liveChat.messages);
+    const { data: trendingVideoData }: ApiResponseType = useAxios(
+        {
+            method: "GET", 
+            url: `${process.env.VITE_APP_YOUTUBE_API}/${process.env.VITE_APP_YOUTUBE_VIDEO_ENDPOINT}`
+        }
     );
-    const [channelDetailsLoading, setChannelDetailsLoading] = useState(false);
-    const [channelDetails, setChannelDetails] = useState<any>(null);
+    const { video, loading } = useSelector((state: RootState) => state.videoPlayer.videoPlayer)
+    const { details: channelDetails, loading: channelDetailsLoading } = useSelector((state: RootState) => state.videoPlayer.channelDetails)
     const [videoLike, setVideoLike] = useState<null | boolean>(null);
     const [subscribe, setSubscribe] = useState(false);
     const [showVideoFullDesc, setShowVideoFullDesc] = useState(false);
@@ -62,65 +52,54 @@ const WatchPage: React.FC = () => {
     const [liveMessage, setLiveMessage] = useState('')
     const liveChatDivRef = useRef<null | HTMLDivElement>(null)
 
-    useEffect(() => {
-        if (data && data.items?.length) {
-            const videoData = data?.items[0];
-            const channelId = videoData?.snippet?.channelId;
-            setVideo(videoData);
-            fetchChannelData(channelId);
-        }
-    }, [data]);
-    
+
     useEffect(() => {
         if (trendingVideoData && trendingVideoData.items) {
             setTrendingVideos(trendingVideoData.items);
         }
     }, [trendingVideoData]);
-    
+
     useEffect(() => {
         const interval = setInterval(() => {
             const { avatar, name } =
-            LiveChatData[Math.floor(Math.random() * LiveChatData.length)];
+                LiveChatData[Math.floor(Math.random() * LiveChatData.length)];
             const message = GenerateRandomText(20);
             dispatch(
-                AddMessage({
+                ADD_MESSAGE({
                     avatar,
                     name,
                     message,
                 })
-            ); 
+            );
         }, 800);
-        return () => clearInterval(interval);
+
+        return () => {
+            clearInterval(interval);
+        }
     }, []);
-    
-    
+
+
+    useEffect(() => {
+        if (id) dispatch(getVideoPlayerData(id))
+        return () => {
+            dispatch(CLEAR_LIVE_CHAT_MESSAGES())
+            setSubscribe(false)
+            setVideoLike(null)
+            dispatch(CLEAR_COMMENT())
+
+        }
+    }, [id])
+
     useEffect(() => {
         if (liveChatDivRef.current) {
-        const {scrollTop, scrollHeight, clientHeight} = liveChatDivRef.current 
-        if(scrollTop + clientHeight < scrollHeight-(clientHeight/2)) return 
-        else {
-            liveChatDivRef.current.scrollTop = liveChatDivRef.current.scrollHeight;
+            const { scrollTop, scrollHeight, clientHeight } = liveChatDivRef.current
+            if (scrollTop + clientHeight < scrollHeight - (clientHeight / 2)) return
+            else {
+                liveChatDivRef.current.scrollTop = liveChatDivRef.current.scrollHeight;
+            }
         }
-    }
     }, [messages])
 
-    const fetchChannelData = async (channelId: string) => {
-        try {
-            setChannelDetailsLoading(true);
-            const channelUrl = `${process.env.VITE_APP_YOUTUBE_API}/${
-                process.env.VITE_APP_YOUTUBE_CHANNEL_DETAILS_ENDPOINT
-            }&id=${channelId}`;
-            const response = await FetchData({
-                method: "GET",
-                url: channelUrl,
-            });
-            setChannelDetailsLoading(false);
-            setChannelDetails(response?.items[0]);
-        } catch (err) {
-            setChannelDetailsLoading(false);
-            ErrorHandler(err)
-        }
-    };
 
     const toggleVideoLike = (condition: string) => {
         setVideoLike(() => {
@@ -128,24 +107,24 @@ const WatchPage: React.FC = () => {
             else return false;
         });
     };
-    
+
     const copyUrl = () => {
         const currentUrl = window.location.href;
         navigator.clipboard
-        .writeText(currentUrl)
-        .then(() => {
-            toast.success("Link Copied to Clipboard");
-        })
-        .catch((error) => {
-            console.log(error)
-            toast.error("Error! please try again later!");
-        });
+            .writeText(currentUrl)
+            .then(() => {
+                toast.success("Link Copied to Clipboard");
+            })
+            .catch((error) => {
+                console.log(error)
+                toast.error("Error! please try again later!");
+            });
     };
-    
-    const addLiveChatMessage = (e : any) => {
+
+    const addLiveChatMessage = (e: any) => {
         if (e.code !== "Enter") return;
         dispatch(
-            AddMessage({
+            ADD_MESSAGE({
                 name: "Rashika Sahu",
                 message: liveMessage,
                 avatar: "../../public/Rashika_Sahu.jpeg",
@@ -153,13 +132,13 @@ const WatchPage: React.FC = () => {
         );
         setLiveMessage('')
     };
-    
+
     const toggleShowLiveChat = () => {
         setShowLiveChat((prevState) => !prevState);
     };
-    
 
-    
+
+
     return (
         <>
             <div className="w-full p-4 flex items-center justify-center">
@@ -168,6 +147,7 @@ const WatchPage: React.FC = () => {
                     <div className="h-fit w-full sm:px-3 flex flex-col gap-2 md:flex-row md:gap-4">
                         {/* video player */}
                         <div className="flex flex-col gap-3 sm:gap-2  md:w-3/5 w-full">
+                            {/* -------------------- */}
                             <iframe
                                 // width="700"
                                 // height="350"
@@ -216,11 +196,10 @@ const WatchPage: React.FC = () => {
                                         </div>
                                     )}
                                     <div
-                                        className={` ${
-                                            subscribe
-                                                ? "bg-gradient-to-r from-pink-500 to-amber-500"
-                                                : "bg-white"
-                                        } h-fit text-zinc-900  font-semibold  text-sm sm:text-base px-3 py-1 rounded-2xl flex gap-1 items-center cursor-pointer`}
+                                        className={` ${subscribe
+                                            ? "bg-gradient-to-r from-pink-500 to-amber-500"
+                                            : "bg-white"
+                                            } h-fit text-zinc-900  font-semibold  text-sm sm:text-base px-3 py-1 rounded-2xl flex gap-1 items-center cursor-pointer`}
                                         onClick={() =>
                                             setSubscribe(
                                                 (prevState: boolean) =>
@@ -289,9 +268,8 @@ const WatchPage: React.FC = () => {
                                     )}
                                 </div>
                                 <div
-                                    className={`${
-                                        showVideoFullDesc ? "" : "line-clamp-3"
-                                    }`}
+                                    className={`${showVideoFullDesc ? "" : "line-clamp-3"
+                                        }`}
                                 >
                                     {video.snippet?.description}
                                 </div>
@@ -316,8 +294,9 @@ const WatchPage: React.FC = () => {
                                     </div>
                                 )}
                             </div>
+                            {/* comments */}
                             <div className=" bg-transparent p-2 w-full overflow-x-auto">
-                                <VideoComments/>
+                                <VideoComments />
                             </div>
                         </div>
 
@@ -329,7 +308,7 @@ const WatchPage: React.FC = () => {
                                         className="h-full text-base md:text-lg cursor-pointer flex gap-2 justify-center items-center  py-2"
                                         onClick={toggleShowLiveChat}
                                     >
-                                    {showLiveChat? "Hide ":"Show "}Live Chat
+                                        {showLiveChat ? "Hide " : "Show "}Live Chat
                                         {showLiveChat ? (
                                             <ArrowUp />
                                         ) : (
@@ -353,9 +332,9 @@ const WatchPage: React.FC = () => {
                                                 type="text"
                                                 className="w-full rounded h-full bg-transparent text-white px-2 py-1 font-semibold border-[1px] border-white"
                                                 placeholder="Type Message.."
-                                                onKeyDown={(e : any) => addLiveChatMessage(e)}
+                                                onKeyDown={(e: any) => addLiveChatMessage(e)}
                                                 value={liveMessage}
-                                                onChange={(e : EventType) => setLiveMessage(e.target.value) }
+                                                onChange={(e: EventType) => setLiveMessage(e.target.value)}
                                             />
                                         </div>
                                     </div>
@@ -365,8 +344,8 @@ const WatchPage: React.FC = () => {
                             {/* trending videos */}
                             {trendingVideos && (
                                 <div className="flex flex-col gap-2 w-full ">
-                                    {trendingVideos.map((video : any) => (
-                                        <RecommendedVideoCard video={video} key={video.id}/>
+                                    {trendingVideos.map((video: any) => (
+                                        <RecommendedVideoCard video={video} key={video.id} />
                                     ))}
                                 </div>
                             )}

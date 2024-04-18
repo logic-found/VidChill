@@ -3,7 +3,7 @@ import fetchData from "./FetchData"
 import { ApiFormat } from "../Types"
 import ErrorHandler from "./ErrorHandler"
 
-const useAxios = ({method, url} : ApiFormat) => {
+const useAxios = ({method, url, dependency} : ApiFormat) => {
     const [loading, setLoading] = useState(false)
     const [responseData, setResponseData] = useState(null)
     useEffect(() => {
@@ -21,7 +21,7 @@ const useAxios = ({method, url} : ApiFormat) => {
                 }
             }
             )()
-        }, [])
+        }, dependency? [...dependency]:[])
     return {loading, data: responseData}
 }
 

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Comment } from '../Types'
-import { addComment } from '../redux/CommentSlice';
+import { ADD_COMMENT } from '../redux/CommentSlice';
 import { RootState } from "../redux/store";
 
 
@@ -23,7 +23,7 @@ const VideoComments = () => {
 
     
     const addRootCommentHandler = () => {
-        dispatch(addComment({
+        dispatch(ADD_COMMENT({
             parentId: null,
             message: rootComment
         }))
@@ -73,8 +73,8 @@ const CommentComp = ({ comment }: CommentCompProps) => {
         setReply("")
     }
 
-    const addCommentHandler = () => {
-        dispatch(addComment({
+    const ADD_COMMENTHandler = () => {
+        dispatch(ADD_COMMENT({
             parentId: comment.id,
             message: reply
         }))
@@ -97,7 +97,7 @@ const CommentComp = ({ comment }: CommentCompProps) => {
                         <input type="text" className='py-1 px-2  text-sm sm:text-base bg-transparent border-b-[1px] border-zinc-700 focus:outline-none text-white rounded w-full ' placeholder='Add a reply..' value={reply} onChange={(e: EventType) => setReply(e.target.value)} />
                         <div className="w-full flex justify-end gap-2">
                             <button className="rounded-full border-[1px] border-zinc-500 py-1 px-3 flex items-center justify-center" onClick={hideAddReply}>Cancel</button>
-                            <button className="rounded-full border-[1px] border-blue-500 py-1 px-3 flex items-center justify-center disabled:cursor-not-allowed" disabled={reply.length === 0} onClick={addCommentHandler}>Reply</button>
+                            <button className="rounded-full border-[1px] border-blue-500 py-1 px-3 flex items-center justify-center disabled:cursor-not-allowed" disabled={reply.length === 0} onClick={ADD_COMMENTHandler}>Reply</button>
                         </div>
                     </div>
                 }

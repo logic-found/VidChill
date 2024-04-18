@@ -13,7 +13,7 @@ const CommentsSlice = createSlice({
     name: 'comments',
     initialState,
     reducers: {
-        addComment: (state, action) => {
+        ADD_COMMENT: (state, action) => {
             const { parentId, message } = action.payload
             if(!parentId){                                              // root level comment
                 state.comments.push({
@@ -29,10 +29,14 @@ const CommentsSlice = createSlice({
                 state.comments = comments
             }
             toast.success("Comment Added")
+        },
+        CLEAR_COMMENT : (state) => {
+            state.comments =  CommentsData
         }
+
     }
 })
 
 
-export const { addComment } = CommentsSlice.actions
+export const { ADD_COMMENT, CLEAR_COMMENT} = CommentsSlice.actions
 export default CommentsSlice.reducer

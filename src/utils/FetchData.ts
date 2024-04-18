@@ -4,9 +4,8 @@ import { ApiFormat } from '../Types'
 
 const FetchData = async ({method, url} : ApiFormat) => {
     const URL = `${url}&key=${process.env.VITE_APP_YOUTUBE_API_KEY}`
-    const response = await axios({method, url : URL})
-    const responseData = response?.data
-    return responseData
+    const {data} = await axios({method, url : URL})
+    return data
 }
 
 
