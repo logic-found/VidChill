@@ -5,7 +5,7 @@ import { IoSearchOutline as SearchIcon } from "react-icons/io5";
 import { SET_SEARCH_KEYWORD, SET_SEARCH_SUGGESTION_CACHE } from '../redux/SearchSlice'
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
-import { ReduxRootState } from "../Types";
+import { RootState } from "../redux/store";
 
 
 type EventType = React.ChangeEvent<HTMLInputElement>;
@@ -13,9 +13,9 @@ type EventType = React.ChangeEvent<HTMLInputElement>;
 const Header: React.FC = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate()
-    const searchKeyword: string = useSelector((state: ReduxRootState) => state.search.searchKeyword)
-    const searchSuggestionCache: { [key: string]: [] } = useSelector((state: ReduxRootState) => state.search.searchSuggestionCache)
-    const loading = useSelector((state: ReduxRootState) => state.search.loading)
+    const searchKeyword: string = useSelector((state: RootState) => state.search.searchKeyword)
+    const searchSuggestionCache: { [key: string]: [] } = useSelector((state: RootState) => state.search.searchSuggestionCache)
+    const loading = useSelector((state: RootState) => state.search.loading)
     const [showSearchSuggestion, setShowSearchSuggestion] = useState(false)
     const [searchSuggestion, setSearchSuggestion] = useState([])
 

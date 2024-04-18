@@ -10,7 +10,7 @@ const initialState : SearchInitialState = {
     searchSuggestionCache : {}
 }
 
-export const getSearchResults = createAsyncThunk('GET_SEARCH_RESULTS', async (keyword, thunkAPI) => {
+export const getSearchResults = createAsyncThunk('GET_SEARCH_RESULTS', async (keyword : string, thunkAPI) => {
     try{
         const url = `${process.env.VITE_APP_YOUTUBE_API}/${process.env.VITE_APP_SEARCH_VIDEO_ENDPOINT}&q=${keyword}`
         return await FetchData({method: 'GET', url})

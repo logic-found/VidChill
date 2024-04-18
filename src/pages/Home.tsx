@@ -10,6 +10,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import FetchData from "../utils/FetchData"
 import { ApiResponseType } from "../Types"
 import { SET_SEARCH_KEYWORD } from "../redux/SearchSlice";
+import ErrorHandler from "../utils/ErrorHandler"
 
 
 export default function Home() {
@@ -19,7 +20,8 @@ export default function Home() {
   const { loading, data }: ApiResponseType = useAxios({ method: 'GET', url })
   const [videos, setVidoes] = useState<any[]>([])
   const [nextPageToken, setNextPageToken] = useState<string | null>(null)
-
+  
+  
   useEffect(() => {
     if (data) {
       setVidoes(data?.items)
@@ -28,15 +30,20 @@ export default function Home() {
   }, [data])
 
   const fetchMoreDataHandler = async () => {
-    const url = `${process.env.VITE_APP_YOUTUBE_API}/${process.env.VITE_APP_YOUTUBE_VIDEO_ENDPOINT}&pageToken=${nextPageToken}`
-    const response = await FetchData({
-      method: 'GET',
-      url,
-    })
-    const newVideosData = [...response?.items]
-    setVidoes((prevState) => [...prevState, ...newVideosData])
-    if (response.nextPageToken) setNextPageToken(response.nextPageToken)
-    else setNextPageToken(null)
+    try{
+      const url = `${process.env.VITE_APP_YOUTUBE_API}/${process.env.VITE_APP_YOUTUBE_VIDEO_ENDPOINT}&pageToken=${nextPageToken}`
+      const response = await FetchData({
+        method: 'GET',
+        url,
+      })
+      const newVideosData = [...response?.items]
+      setVidoes((prevState) => [...prevState, ...newVideosData])
+      if (response.nextPageToken) setNextPageToken(response.nextPageToken)
+      else setNextPageToken(null)
+    }
+    catch(err){
+      ErrorHandler(err)
+    }
   }
 
   const onSearchKeywordSetHandler = (keyword: string) => {

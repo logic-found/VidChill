@@ -29,13 +29,6 @@ export interface CommentsInitialState {
     comments: Comment[]
 }
 
-export interface ReduxRootState {
-    liveChat : LiveChatInitialState,
-    comments : CommentsInitialState,
-    search : SearchInitialState
-}
-
-
 export interface ApiResponseType {
     loading : boolean,
     data : any

@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Comment } from '../Types'
 import { addComment } from '../redux/CommentSlice';
-import { ReduxRootState } from "../Types";
+import { RootState } from "../redux/store";
 
 
 type EventType = React.ChangeEvent<HTMLInputElement>;
@@ -18,7 +18,7 @@ interface CommentCompProps {
 
 const VideoComments = () => {
     const dispatch = useDispatch()
-    const comments = useSelector((state : ReduxRootState) => state.comments.comments)
+    const comments = useSelector((state : RootState) => state.comments.comments)
     const [rootComment, setRootComment] = useState('')
 
     

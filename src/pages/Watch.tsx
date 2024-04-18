@@ -26,7 +26,9 @@ import { LiveChatMessage as Message } from "../Types";
 import { LiveChatData, GenerateRandomText } from "../utils/data";
 import RecommendedVideoCard from "../components/RecommendedVideoCard";
 import VideoComments from "../components/VideoComments";
-import { ReduxRootState, ApiResponseType } from "../Types";
+import { ApiResponseType } from "../Types";
+import ErrorHandler from "../utils/ErrorHandler";
+import { RootState } from "../redux/store";
 
 
 
@@ -36,7 +38,7 @@ const WatchPage: React.FC = () => {
     const { id } = useParams();
     const [video, setVideo] = useState<any>(null);
     const dispatch = useDispatch();
-    const messages = useSelector((state : ReduxRootState) => state.liveChat.messages);
+    const messages = useSelector((state : RootState) => state.liveChat.messages);
     const videoUrl = `${process.env.VITE_APP_YOUTUBE_API}/${
         process.env.VITE_APP_YOUTUBE_VIDEO_DETAILS_ENDPOINT
     }&id=${id}`;
@@ -86,8 +88,7 @@ const WatchPage: React.FC = () => {
                     name,
                     message,
                 })
-            );
-            
+            ); 
         }, 800);
         return () => clearInterval(interval);
     }, []);
@@ -117,7 +118,7 @@ const WatchPage: React.FC = () => {
             setChannelDetails(response?.items[0]);
         } catch (err) {
             setChannelDetailsLoading(false);
-            console.log(err);
+            ErrorHandler(err)
         }
     };
 
@@ -125,8 +126,8 @@ const WatchPage: React.FC = () => {
         setVideoLike(() => {
             if (condition == "like") return true;
             else return false;
-            });
-        };
+        });
+    };
     
     const copyUrl = () => {
         const currentUrl = window.location.href;
