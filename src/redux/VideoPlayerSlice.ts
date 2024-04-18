@@ -17,7 +17,7 @@ const initialState : VideoPlayerInitialState = {
 
 export const getVideoPlayerData = createAsyncThunk('GET_VIDEO_PLAYER_DATA', async (id: string, thunkAPI) => {
     try {
-        const url = `${process.env.VITE_APP_YOUTUBE_API}/${process.env.VITE_APP_YOUTUBE_VIDEO_DETAILS_ENDPOINT}&id=${id}`;
+        const url = `${import.meta.env.VITE_APP_YOUTUBE_API}/${import.meta.env.VITE_APP_YOUTUBE_VIDEO_DETAILS_ENDPOINT}&id=${id}`;
         const response = await FetchData({ method: 'GET', url })
         const channelId = response.items[0]?.snippet?.channelId;
         thunkAPI.dispatch(getChannelDetails(channelId))
@@ -29,7 +29,7 @@ export const getVideoPlayerData = createAsyncThunk('GET_VIDEO_PLAYER_DATA', asyn
 })
 export const getChannelDetails = createAsyncThunk('GET_CHANNEL_DETAILS', async (channelId: string, thunkAPI) => {
     try {
-        const channelUrl = `${process.env.VITE_APP_YOUTUBE_API}/${process.env.VITE_APP_YOUTUBE_CHANNEL_DETAILS_ENDPOINT
+        const channelUrl = `${import.meta.env.VITE_APP_YOUTUBE_API}/${import.meta.env.VITE_APP_YOUTUBE_CHANNEL_DETAILS_ENDPOINT
             }&id=${channelId}`;
         return await FetchData({
             method: "GET",

@@ -16,7 +16,7 @@ import ErrorHandler from "../utils/ErrorHandler"
 export default function Home() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const url = `${process.env.VITE_APP_YOUTUBE_API}/${process.env.VITE_APP_YOUTUBE_VIDEO_ENDPOINT}`
+  const url = `${import.meta.env.VITE_APP_YOUTUBE_API}/${import.meta.env.VITE_APP_YOUTUBE_VIDEO_ENDPOINT}`
   const { loading, data }: ApiResponseType = useAxios({ method: 'GET', url })
   const [videos, setVidoes] = useState<any[]>([])
   const [nextPageToken, setNextPageToken] = useState<string | null>(null)
@@ -31,7 +31,7 @@ export default function Home() {
 
   const fetchMoreDataHandler = async () => {
     try{
-      const url = `${process.env.VITE_APP_YOUTUBE_API}/${process.env.VITE_APP_YOUTUBE_VIDEO_ENDPOINT}&pageToken=${nextPageToken}`
+      const url = `${import.meta.env.VITE_APP_YOUTUBE_API}/${import.meta.env.VITE_APP_YOUTUBE_VIDEO_ENDPOINT}&pageToken=${nextPageToken}`
       const response = await FetchData({
         method: 'GET',
         url,

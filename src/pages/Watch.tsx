@@ -39,7 +39,7 @@ const WatchPage: React.FC = () => {
     const { data: trendingVideoData }: ApiResponseType = useAxios(
         {
             method: "GET", 
-            url: `${process.env.VITE_APP_YOUTUBE_API}/${process.env.VITE_APP_YOUTUBE_VIDEO_ENDPOINT}`
+            url: `${import.meta.env.VITE_APP_YOUTUBE_API}/${import.meta.env.VITE_APP_YOUTUBE_VIDEO_ENDPOINT}`
         }
     );
     const { video, loading } = useSelector((state: RootState) => state.videoPlayer.videoPlayer)

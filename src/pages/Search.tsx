@@ -19,7 +19,7 @@ const Search: React.FC = () => {
 
   const fetchMoreDataHandler = async () => {
     try {
-      const url = `${process.env.VITE_APP_YOUTUBE_API}/${process.env.VITE_APP_SEARCH_VIDEO_ENDPOINT}&q=${searchKeyword}&pageToken=${nextPageToken}`
+      const url = `${import.meta.env.VITE_APP_YOUTUBE_API}/${import.meta.env.VITE_APP_SEARCH_VIDEO_ENDPOINT}&q=${searchKeyword}&pageToken=${nextPageToken}`
       const response = await FetchData({
         method: 'GET',
         url

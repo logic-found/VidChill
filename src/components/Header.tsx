@@ -55,7 +55,7 @@ const Header: React.FC = () => {
     }
 
     const getSuggestionsHandler = async (keyword: string) => {
-        const { data } = await axios.get(`${process.env.VITE_APP_YOUTUBE_SEARCH_SUGGESTION_API}&q=${keyword}`)
+        const { data } = await axios.get(`${import.meta.env.VITE_APP_YOUTUBE_SEARCH_SUGGESTION_API}&q=${keyword}`)
         const suggestions = data[1]
         if (suggestions?.length > 0) setSearchSuggestion(data[1])
         else setSearchSuggestion([])
