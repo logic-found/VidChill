@@ -68,7 +68,7 @@ const Header: React.FC = () => {
                 {/* logo */}
                 <div className="flex gap-5 sm:gap-8">
                     <Link className="flex gap-1 items-center justify-center cursor-pointer" to="/">
-                        <img src="../../public/logo.ico" className="h-6 w-6 sm:h-10 sm:w-10" />
+                        <img src="/logo.ico" className="h-6 w-6 sm:h-10 sm:w-10" />
                         <div className="hidden sm:block">VidChill</div>
                     </Link>
                 </div>
@@ -105,7 +105,7 @@ const Header: React.FC = () => {
                     </ul>}
                 </div>
 
-                <div className="flex items-center justify-center"><img src="../../public/Rashika_Sahu.jpeg" className="h-6 w-6 sm:h-10 sm:w-10 rounded-full" /></div>
+                <div className="flex items-center justify-center"><img src="/Rashika_Sahu.jpeg" className="h-6 w-6 sm:h-10 sm:w-10 rounded-full" /></div>
 
             </div>
             {loading && (

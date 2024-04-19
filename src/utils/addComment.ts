@@ -8,7 +8,7 @@ export const addCommentFun = (comments : Comment[] , parentCommentId : number, m
             comment.replies.push({
                 id : new Date().getTime(),
                 name : 'Rashika Sahu',
-                avatar : '../../public/Rashika_Sahu.jpeg',
+                avatar : '/Rashika_Sahu.jpeg',
                 message,
                 replies : []
             })

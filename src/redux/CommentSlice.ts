@@ -19,7 +19,7 @@ const CommentsSlice = createSlice({
                 state.comments.push({
                     id : new Date().getSeconds(),
                     name : 'Rashika Sahu',
-                    avatar : '../../public/Rashika_Sahu.jpeg',
+                    avatar : '/Rashika_Sahu.jpeg',
                     message,
                     replies : []
                 })

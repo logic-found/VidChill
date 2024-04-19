@@ -94,7 +94,7 @@ const WatchPage: React.FC = () => {
                 id : Math.random().toString()+liveMessage,
                 name: "Rashika Sahu",
                 message: liveMessage,
-                avatar: "../../public/Rashika_Sahu.jpeg",
+                avatar: "/Rashika_Sahu.jpeg",
             })
         );
         setLiveMessage('')
