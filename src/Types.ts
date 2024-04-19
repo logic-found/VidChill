@@ -12,7 +12,8 @@ export interface ApiFormat{
 export interface LiveChatMessage{
     avatar : string,
     name : string,
-    message : string
+    message : string,
+    id : string | number
 }
 
 export interface LiveChatInitialState {
