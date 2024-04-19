@@ -71,8 +71,7 @@ export default function Home() {
               next={fetchMoreDataHandler}
               hasMore={nextPageToken ? true : false}
               loader={<>{Array(6).fill(null).map((_, index) => (<ShimmerUI key={index} />))}</>}
-              endMessage={<p className="text-3xl p-3 w-full text-center">✅ You are all caught up
-              </p>}
+              endMessage={<></>}
             >
               {videos?.map((video) => <VideoCard video={video} key={video.id} />)}
             </InfiniteScroll></>}

@@ -54,7 +54,7 @@ const Search: React.FC = () => {
             next={fetchMoreDataHandler}
             hasMore={nextPageToken ? true : false}
             loader={Array(6).fill(null).map(() => (<ShimmerUI key={Math.random()} />))}
-            endMessage={<p className="text-3xl p-3 w-full text-center">✅ You are all caught up</p>}>
+            endMessage={<></>}>
             {videos?.map((video) => <SearchVideoCard video={video} key={video.id?.videoId} />)}
           </InfiniteScroll>}
           {!videos && 
