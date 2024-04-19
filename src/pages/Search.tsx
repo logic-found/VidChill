@@ -57,7 +57,7 @@ const Search: React.FC = () => {
             endMessage={<></>}>
             {videos?.map((video) => <SearchVideoCard video={video} key={video.id?.videoId} />)}
           </InfiniteScroll>}
-          {!videos && 
+          {!videos && !loading && 
             <div className="flex flex-col gap-2 text-base sm:text-xl pt-5 text-white text-center">
               <div className="font-semibold">No results found</div>
               <div>Please try with a different keyword
