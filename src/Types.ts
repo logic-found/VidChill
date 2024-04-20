@@ -1,3 +1,6 @@
+import { Method } from 'axios';
+
+
 export interface SearchInitialState{
     searchKeyword : string,
     searchSuggestionCache : { [key: string]: [] }
@@ -6,8 +9,9 @@ export interface SearchInitialState{
 }
 export interface ApiFormat{
     url : string,
-    method : string,
-    dependency? : any[]
+    method : Method,
+    dependency? : any[],
+    headers? : {}
 }
 export interface LiveChatMessage{
     avatar : string,

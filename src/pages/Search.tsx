@@ -1,15 +1,13 @@
 import { useEffect, useState } from "react"
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import ShimmerUI from '../components/ShimmerUI/ShimmerSearchVideoCard'
 import FetchData from "../utils/FetchData"
 import SearchVideoCard from "../components/SearchVideoCard";
 import ErrorHandler from "../utils/ErrorHandler";
-import { getSearchResults } from "../redux/SearchSlice";
-import { AppDispatch, RootState } from "../redux/store";
+import { RootState } from "../redux/store";
 
 const Search: React.FC = () => {
-  const dispatch = useDispatch<AppDispatch>()
   const searchKeyword = useSelector((state: RootState) => state.search.searchKeyword)
   const searchResults: any = useSelector((state: RootState) => state.search.searchResults)
   const loading: any = useSelector((state: RootState) => state.search.loading)
@@ -37,11 +35,6 @@ const Search: React.FC = () => {
     setVideos(searchResults?.items)
     setNextPageToken(searchResults?.nextPageToken)
   }, [searchResults])
-
-  useEffect(() => {
-    dispatch(getSearchResults(searchKeyword))
-  }, [])
-
 
   return (
     <>

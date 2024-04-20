@@ -9,12 +9,13 @@ import ShimmerUI from '../components/ShimmerUI/ShimmerHomeVideoCard'
 import InfiniteScroll from 'react-infinite-scroll-component';
 import FetchData from "../utils/FetchData"
 import { ApiResponseType } from "../Types"
-import { SET_SEARCH_KEYWORD } from "../redux/SearchSlice";
+import { getSearchResults, SET_SEARCH_KEYWORD } from "../redux/SearchSlice";
 import ErrorHandler from "../utils/ErrorHandler"
+import { AppDispatch } from "../redux/store"
 
 
 export default function Home() {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch<AppDispatch>()
   const navigate = useNavigate()
   const url = `${import.meta.env.VITE_APP_YOUTUBE_API}/${import.meta.env.VITE_APP_YOUTUBE_VIDEO_ENDPOINT}`
   const { loading, data }: ApiResponseType = useAxios({ method: 'GET', url })
@@ -48,6 +49,7 @@ export default function Home() {
 
   const onSearchKeywordSetHandler = (keyword: string) => {
     dispatch(SET_SEARCH_KEYWORD(keyword))
+    dispatch(getSearchResults(keyword))
     navigate('/search');
   }
 

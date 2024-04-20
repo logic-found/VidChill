@@ -43,12 +43,10 @@ const SearchSlice = createSlice({
         })
         .addCase(getSearchResults.fulfilled, (state, action) => {
             state.loading = false
-            state.searchKeyword = ''
             state.searchResults = action.payload
         })
         .addCase(getSearchResults.rejected, (state, action) => {
             state.loading = false
-            state.searchKeyword = ''
             ErrorHandler(action.payload)
         })
     }
