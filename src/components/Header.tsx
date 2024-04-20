@@ -102,7 +102,7 @@ const Header: React.FC = () => {
                         </div>
                     </div>
 
-                    {showSearchSuggestion && <ul className=" bg-zinc-800 absolute top-12 sm:top-14 w-40 sm:w-96 rounded-lg text-base flex flex-col gap-1 z-10 overflow-x-scroll break-words remove-scrollbar">
+                    {showSearchSuggestion && <ul className=" bg-zinc-800 absolute top-12 sm:top-14 max-w-96 sm:w-96 rounded-lg text-base flex flex-col gap-1 z-10 overflow-x-scroll break-words remove-scrollbar">
                         {searchSuggestion?.map((suggestion) =>
                             <div className="px-3 py-2  hover:bg-zinc-700 flex gap-2  h-9 cursor-context-menu overflow-x-scroll break-words remove-scrollbar" key={suggestion} onMouseDown={() => onSearchKeywordSetHandler(suggestion)}>
                                 <div className="h-full flex items-center justify-center">
