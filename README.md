@@ -2,6 +2,9 @@
 ## VidChill
 ### This project is a video streaming application inspired by YouTube, where users can watch videos, search for content, engage in live chat, and more.
 
+### Live App : [Link](https://vid-chill-gilt.vercel.app)
+### Demo : [Link](https://drive.google.com/file/d/1KL6MkIedSmx92JYWbF6cW6Ul8cEHJbtU/view)
+
 ## Features : 
 **:mag: Optimised Search Suggestions:** Utilizing advanced concepts like Debouncing & Caching
 
