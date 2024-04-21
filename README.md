@@ -19,7 +19,7 @@
 **📱 Responsive Design:** Ensures seamless user experience across various devices
 
 ## Homepage
-![image](https://github.com/logic-found/VidChill/assets/93260606/2f681948-6096-4a1b-ad43-7af7ea94e514)
+![image](https://github.com/logic-found/VidChill/assets/93260606/cc83f488-a2d9-47fb-9c2f-bb3c51483f8e)
 
 ## Video Player & Live Chat
 
