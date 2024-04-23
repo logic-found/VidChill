@@ -5,8 +5,8 @@ import { IoSearchOutline as SearchIcon } from "react-icons/io5";
 import { getSearchResults, SET_SEARCH_KEYWORD, SET_SEARCH_SUGGESTION_CACHE } from '../redux/SearchSlice'
 import { useNavigate, Link } from "react-router-dom";
 import { AppDispatch, RootState } from "../redux/store";
-import FetchData from "../utils/FetchData";
-
+import axios from "axios";
+import jsonAdapter from 'axios-jsonp'
 
 type EventType = React.ChangeEvent<HTMLInputElement>;
 
@@ -14,10 +14,10 @@ const Header: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate()
     const searchKeyword: string = useSelector((state: RootState) => state.search.searchKeyword)
-    const searchSuggestionCache: { [key: string]: [] } = useSelector((state: RootState) => state.search.searchSuggestionCache)
+    const searchSuggestionCache = useSelector((state: RootState) => state.search.searchSuggestionCache)
     const loading = useSelector((state: RootState) => state.search.loading)
     const [showSearchSuggestion, setShowSearchSuggestion] = useState(false)
-    const [searchSuggestion, setSearchSuggestion] = useState([])
+    const [searchSuggestion, setSearchSuggestion] = useState<any[]>([])
 
     useEffect(() => {
         let timer = setTimeout(() => {
@@ -57,12 +57,13 @@ const Header: React.FC = () => {
     }
 
     const getSuggestionsHandler = async (keyword: string) => {
-        const proxyUrl = import.meta.env.VITE_APP_CORS_PROXY
         const apiUrl  = `${import.meta.env.VITE_APP_YOUTUBE_SEARCH_SUGGESTION_API}&q=${keyword}`
-        const data = await FetchData({
-            url : proxyUrl+'/'+apiUrl,
-            method : 'GET',
-            headers: {'Origin': apiUrl}
+        const {data} = await axios({
+            url : apiUrl,
+            adapter : jsonAdapter,
+            params : {
+                q : keyword
+            }
         })
         const suggestions = data[1]
         if (suggestions?.length > 0) setSearchSuggestion(data[1])

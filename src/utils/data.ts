@@ -13,7 +13,6 @@ export const HomeCategoryList = [
     "Dance",
     "Live",
     "AI",
-    "Live",
     "Computers",
     "Spiritual",
     "Motivation",

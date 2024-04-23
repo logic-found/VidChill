@@ -7,7 +7,9 @@ const initialState : SearchInitialState = {
     searchKeyword : '',
     loading : false,
     searchResults : null,
-    searchSuggestionCache : {}
+    searchSuggestionCache : {
+        '' : ['namaste javascript', 'namaste react', 'react project', 'news', 'node.js tutorials', 'motivation', 'dance']
+    }
 }
 
 export const getSearchResults = createAsyncThunk('GET_SEARCH_RESULTS', async (keyword : string, thunkAPI) => {

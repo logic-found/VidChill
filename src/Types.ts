@@ -3,7 +3,7 @@ import { Method } from 'axios';
 
 export interface SearchInitialState{
     searchKeyword : string,
-    searchSuggestionCache : { [key: string]: [] }
+    searchSuggestionCache : { [key: string]: (string | number)[] }
     loading : boolean, 
     searchResults : any[] | null
 }
