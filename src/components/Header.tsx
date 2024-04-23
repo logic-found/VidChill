@@ -6,7 +6,7 @@ import { getSearchResults, SET_SEARCH_KEYWORD, SET_SEARCH_SUGGESTION_CACHE } fro
 import { useNavigate, Link } from "react-router-dom";
 import { AppDispatch, RootState } from "../redux/store";
 import axios from "axios";
-import jsonAdapter from 'axios-jsonp'
+const jsonAdapter = require('axios-jsonp')
 
 type EventType = React.ChangeEvent<HTMLInputElement>;
 
