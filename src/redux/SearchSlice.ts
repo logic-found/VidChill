@@ -8,7 +8,7 @@ const initialState : SearchInitialState = {
     loading : false,
     searchResults : null,
     searchSuggestionCache : {
-        '' : ['namaste javascript', 'namaste react', 'react project', 'news', 'node.js tutorials', 'motivation', 'dance']
+        '' : ['namaste javascript', 'namaste react', 'react projects', 'news', 'node.js tutorials', 'motivation', 'dance']
     }
 }
 

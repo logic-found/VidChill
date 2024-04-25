@@ -82,7 +82,7 @@ const Header: React.FC = () => {
                 <div className="flex flex-col">
                     {/* search bar */}
                     <div className="flex h-10 ">
-                        <div className="flex justify-between items-center relative h-full max-w-96 sm:w-96 border-zinc-700 border-[1px] border-r-0 rounded-l-full">
+                        <div className="flex justify-between items-center relative h-full w-44 sm:w-96 border-zinc-700 border-[1px] border-r-0 rounded-l-full">
                             <input
                                 type="text"
                                 placeholder="Search"
@@ -100,15 +100,15 @@ const Header: React.FC = () => {
                         </div>
                     </div>
 
-                    {showSearchSuggestion && <ul className=" bg-zinc-800 absolute top-12 sm:top-14 max-w-96 sm:w-96 rounded-lg text-base flex flex-col gap-1 z-10 overflow-x-scroll break-words remove-scrollbar">
+                    {showSearchSuggestion && <div className=" bg-zinc-800 absolute top-[3.2rem] sm:top-14 w-44 sm:w-96 rounded-lg text-base flex flex-col gap-1 z-10">
                         {searchSuggestion?.map((suggestion) =>
-                            <div className="px-3 py-2  hover:bg-zinc-700 flex gap-2  h-9 cursor-context-menu overflow-x-scroll break-words remove-scrollbar" key={suggestion} onMouseDown={() => onSearchKeywordSetHandler(suggestion)}>
+                            <div className="px-2 py-1 sm:py-2  hover:bg-zinc-700 flex  gap-2  h-9 cursor-context-menu" key={suggestion} onMouseDown={() => onSearchKeywordSetHandler(suggestion)}>
                                 <div className="h-full flex items-center justify-center">
                                     <SearchIcon />
                                 </div>
-                                <div className="">{suggestion}</div>
+                                <div className="h-full max-h-full w-full overflow-x-auto whitespace-nowrap remove-scrollbar overflow-y-hidden">{suggestion}</div>
                             </div>)}
-                    </ul>}
+                    </div>}
                 </div>
 
                 <div className="flex items-center justify-center h-fit w-fit"><img src="/Rashika_Sahu.jpeg" className="h-6 w-6 sm:h-10 sm:w-10 rounded-full" /></div>
