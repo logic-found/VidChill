@@ -31,3 +31,14 @@ html {
     width: 0px;
     height: 0px;
 }
+
+@media screen and (min-width: 400px) {
+  .search-bar-width {
+    min-width: 15rem;
+  }
+}
+@media screen and (min-width: 500px) {
+  .search-bar-width {
+    min-width: 18rem;
+  }
+}
