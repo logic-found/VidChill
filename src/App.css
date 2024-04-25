@@ -32,13 +32,21 @@ html {
     height: 0px;
 }
 
+@media screen and (max-width: 400px) {
+  .search-bar-width {
+    width: 13rem;
+    max-width: 13rem;
+   }
+}
 @media screen and (min-width: 400px) {
   .search-bar-width {
-    min-width: 15rem;
+    width: 18rem;
+    max-width: 18rem;
   }
 }
 @media screen and (min-width: 500px) {
   .search-bar-width {
-    min-width: 18rem;
+    width: 18rem;
+    max-width: 18rem;
   }
 }

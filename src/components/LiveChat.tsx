@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react'
 import {
     IoIosArrowUp as ArrowUp,
     IoIosArrowDown as ArrowDown,
+    IoIosArrowDroprightCircle as ArrowRight
 } from "react-icons/io";
 import { useDispatch, useSelector } from 'react-redux';
 import LiveChatMessage from "../components/LiveChatMessage";
@@ -9,6 +10,7 @@ import { LiveChatMessage as Message } from "../Types";
 import { RootState, AppDispatch } from "../redux/store";
 import { ADD_MESSAGE } from "../redux/LiveChatSlice";
 import { LiveChatData, GenerateRandomText } from "../utils/data";
+import toast from 'react-hot-toast';
 
 type EventType = React.ChangeEvent<HTMLInputElement>;
 
@@ -55,8 +57,12 @@ const LiveChat = () => {
 
 
 
-    const addLiveChatMessage = (e: any) => {
-        if (e.code !== "Enter") return;
+    const addLiveChatMessage = (e?: any) => {
+        if (e && e.code !== "Enter") return;
+        else if(liveMessage === ''){
+            toast.error('Please add a message')
+            return;
+        }
         dispatch(
             ADD_MESSAGE({
                 id: Math.random().toString() + liveMessage,
@@ -101,7 +107,7 @@ const LiveChat = () => {
                                 )
                             )}
                         </div>
-                        <div className="h-[13%] w-full border-t-[2px] border-zinc-700 p-1 px-2">
+                        <div className="h-[13%] w-full border-t-[2px] border-zinc-700 p-1 px-2 flex gap-1 justify-between">
                             <input
                                 type="text"
                                 className="w-full rounded h-full bg-transparent text-white px-2 py-1 font-semibold border-[1px] border-white"
@@ -110,6 +116,7 @@ const LiveChat = () => {
                                 value={liveMessage}
                                 onChange={(e: EventType) => setLiveMessage(e.target.value)}
                             />
+                            <div onClick={() => addLiveChatMessage()} className='h-full flex items-center justify-center text-3xl cursor-pointer'><ArrowRight/></div>
                         </div>
                     </div>
                 )}
