@@ -6,7 +6,6 @@ import { getSearchResults, SET_SEARCH_KEYWORD, SET_SEARCH_SUGGESTION_CACHE } fro
 import { useNavigate, Link } from "react-router-dom";
 import { AppDispatch, RootState } from "../redux/store";
 import axios from "axios";
-const jsonAdapter = require('axios-jsonp')
 
 type EventType = React.ChangeEvent<HTMLInputElement>;
 
@@ -57,18 +56,16 @@ const Header: React.FC = () => {
     }
 
     const getSuggestionsHandler = async (keyword: string) => {
-        const apiUrl  = `${import.meta.env.VITE_APP_YOUTUBE_SEARCH_SUGGESTION_API}&q=${keyword}`
-        const {data} = await axios({
-            url : apiUrl,
-            adapter : jsonAdapter,
-            params : {
-                q : keyword
-            }
-        })
-        const suggestions = data[1]
-        if (suggestions?.length > 0) setSearchSuggestion(data[1])
-        else setSearchSuggestion([])
-        if (searchKeyword) dispatch(SET_SEARCH_SUGGESTION_CACHE({ key: searchKeyword, value: suggestions }))
+        try{
+            const { data }  = await axios.get(`${import.meta.env.VITE_APP_CORS_PROXY_SERVER}/getSearchSuggestions/${keyword}`)
+            const response = data?.response
+            if (response?.length > 0) setSearchSuggestion(response)
+            else setSearchSuggestion([])
+            if (searchKeyword) dispatch(SET_SEARCH_SUGGESTION_CACHE({ key: searchKeyword, value: response }))
+        }
+        catch(err){
+            console.log(err)
+        }
     }
 
     return (

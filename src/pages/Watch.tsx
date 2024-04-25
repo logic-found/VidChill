@@ -1,16 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import useAxios from "../utils/useAxios";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import ShimmerVideoPlayer from "../components/ShimmerUI/ShimmerVideoPlayer";
-import {
-    IoIosArrowUp as ArrowUp,
-    IoIosArrowDown as ArrowDown,
-} from "react-icons/io";
-import LiveChatMessage from "../components/LiveChatMessage";
-import { ADD_MESSAGE, CLEAR_LIVE_CHAT_MESSAGES } from "../redux/LiveChatSlice";
-import { LiveChatMessage as Message } from "../Types";
-import { LiveChatData, GenerateRandomText } from "../utils/data";
+import { CLEAR_LIVE_CHAT_MESSAGES } from "../redux/LiveChatSlice";
 import RecommendedVideoCard from "../components/RecommendedVideoCard";
 import VideoComments from "../components/VideoComments";
 import { ApiResponseType } from "../Types";
@@ -18,13 +11,12 @@ import { RootState, AppDispatch } from "../redux/store";
 import { getVideoPlayerData } from "../redux/VideoPlayerSlice";
 import { CLEAR_COMMENT } from '../redux/CommentSlice'
 import VideoPlayer from "../components/VideoPlayer";
+import LiveChat from "../components/LiveChat";
 
-type EventType = React.ChangeEvent<HTMLInputElement>;
 
 const WatchPage: React.FC = () => {
     const { id } = useParams();
     const dispatch = useDispatch<AppDispatch>()
-    const messages = useSelector((state: RootState) => state.liveChat.messages);
     const { data: trendingVideoData }: ApiResponseType = useAxios(
         {
             method: "GET", 
@@ -34,10 +26,7 @@ const WatchPage: React.FC = () => {
     const { video, loading } = useSelector((state: RootState) => state.videoPlayer.videoPlayer)
     const { loading: channelDetailsLoading } = useSelector((state: RootState) => state.videoPlayer.channelDetails)
     const [trendingVideos, setTrendingVideos] = useState<null | []>(null);
-    const [showLiveChat, setShowLiveChat] = useState(true);
-    const [liveMessage, setLiveMessage] = useState('')
-    const liveChatDivRef = useRef<null | HTMLDivElement>(null)
-
+    
 
     useEffect(() => {
         if (trendingVideoData && trendingVideoData.items) {
@@ -45,27 +34,7 @@ const WatchPage: React.FC = () => {
         }
     }, [trendingVideoData]);
 
-    useEffect(() => {
-        const interval = setInterval(() => {
-            const { avatar, name } =
-                LiveChatData[Math.floor(Math.random() * LiveChatData.length)];
-            const message = GenerateRandomText(20);
-            const id = Math.random().toString()+message
-            dispatch(
-                ADD_MESSAGE({
-                    id,
-                    avatar,
-                    name,
-                    message,
-                })
-            );
-        }, 800);
-
-        return () => {
-            clearInterval(interval);
-        }
-    }, []);
-
+    
 
     useEffect(() => {
         if (id) dispatch(getVideoPlayerData(id))
@@ -74,36 +43,6 @@ const WatchPage: React.FC = () => {
             dispatch(CLEAR_COMMENT())
         }
     }, [id])
-
-    useEffect(() => {
-        if (liveChatDivRef.current) {
-            const { scrollTop, scrollHeight, clientHeight } = liveChatDivRef.current
-            if (scrollTop + clientHeight < scrollHeight - (clientHeight / 2)) return
-            else {
-                liveChatDivRef.current.scrollTop = liveChatDivRef.current.scrollHeight;
-            }
-        }
-    }, [messages])
-
-
-    
-    const addLiveChatMessage = (e: any) => {
-        if (e.code !== "Enter") return;
-        dispatch(
-            ADD_MESSAGE({
-                id : Math.random().toString()+liveMessage,
-                name: "Rashika Sahu",
-                message: liveMessage,
-                avatar: "/Rashika_Sahu.jpeg",
-            })
-        );
-        setLiveMessage('')
-    };
-
-    const toggleShowLiveChat = () => {
-        setShowLiveChat((prevState) => !prevState);
-    };
-
 
 
     return (
@@ -123,45 +62,7 @@ const WatchPage: React.FC = () => {
 
                         <div className="w-full md:w-2/5 flex flex-col gap-4 items-center">
                             {/* live chat */}
-                            <div className=" border-[2px] border-zinc-700 h-fit w-full rounded  box-border">
-                                <div className="  h-10 w-full text-center font-bold text-white border-b-[2px] border-zinc-700 ">
-                                    <div
-                                        className="h-full text-base md:text-lg cursor-pointer flex gap-2 justify-center items-center  py-2"
-                                        onClick={toggleShowLiveChat}
-                                    >
-                                        {showLiveChat ? "Hide " : "Show "}Live Chat
-                                        {showLiveChat ? (
-                                            <ArrowUp />
-                                        ) : (
-                                            <ArrowDown />
-                                        )}
-                                    </div>
-                                </div>
-                                {showLiveChat && (
-                                    <div className="h-96">
-                                        <div className="p-2 h-[87%] flex flex-col gap-2 overflow-y-scroll" ref={liveChatDivRef}>
-                                            {messages.map(
-                                                (message: Message) => (
-                                                    <LiveChatMessage
-                                                        key={message.id}
-                                                        message={message}
-                                                    />
-                                                )
-                                            )}
-                                        </div>
-                                        <div className="h-[13%] w-full border-t-[2px] border-zinc-700 p-1 px-2">
-                                            <input
-                                                type="text"
-                                                className="w-full rounded h-full bg-transparent text-white px-2 py-1 font-semibold border-[1px] border-white"
-                                                placeholder="Type Message.."
-                                                onKeyDown={(e: any) => addLiveChatMessage(e)}
-                                                value={liveMessage}
-                                                onChange={(e: EventType) => setLiveMessage(e.target.value)}
-                                            />
-                                        </div>
-                                    </div>
-                                )}
-                            </div>
+                            <LiveChat/>
 
                             {/* trending videos */}
                             {trendingVideos && (
